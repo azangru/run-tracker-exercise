@@ -1,0 +1,45 @@
+Write an application that tracks jogging times of users
+
+- User must be able to create an account and log in
+- When logged in, user can see, edit and delete his times he entered
+- Implement at least two roles with different permission levels (ie: a regular user would only be able to CRUD on his owned records, a user manager would be able to CRUD users, an admin would be able to CRUD on all records and users, etc.)
+- Each time entry when entered has a date, distance, and time
+- When displayed, each time entry has an average speed
+- Filter by dates from-to
+- Report on average speed & distance per week
+- REST API. Make it possible to perform all user actions via the API, including authentication.
+- In any case you should be able to explain how a REST API works and demonstrate that by creating functional tests that use the REST Layer directly.
+- All actions need to be done client side using AJAX, refreshing the page is not acceptable.
+- Bonus: unit tests!
+- You will not be marked on graphic design, however, do try to keep it as tidy as possible.
+
+
+
+Models
+
+1. User
+- first name
+- last name
+- username
+- password
+- role
+
+2. Run
+- distance
+- time
+- date
+
+
+
+
+Pages:
+- page to edit information about a user
+- page to enter entries/runs (date, distance, time) (modal?)
+- page to show reports
+- users →
+
+
+References:
+- Authentication in Node + Express with JSON tokens: https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
+- Express project structure: https://www.terlici.com/2014/08/25/best-practices-express-structure.html
+- Using ES6 with Node: https://www.airpair.com/javascript/posts/using-es6-harmony-with-nodejs
