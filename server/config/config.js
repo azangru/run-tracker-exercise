@@ -18,11 +18,8 @@ const config = {
   production: {
     dialect: 'sqlite',
     storage: '../db/db.production.sqlite'
-  }
+  },
+  jwtKey: 'very-secret-key'
 };
 
 export default config;
-
-
-// ,
-// storage: '../db/db-dev.sqlite'

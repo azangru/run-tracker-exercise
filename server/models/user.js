@@ -1,3 +1,9 @@
+import bcrypt from 'bcrypt';
+import Promise from 'bluebird';
+Promise.promisifyAll(bcrypt);
+const BCRYPT_COST = process.env.NODE_ENV === 'test' ? 1 : 12;
+
+
 export default (sequelize, DataTypes) => {
   let User = sequelize.define('User', {
     username: {
@@ -8,9 +14,6 @@ export default (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    token: {
-      type: DataTypes.STRING
     },
     firstName: {
       type: DataTypes.STRING,
@@ -34,6 +37,16 @@ export default (sequelize, DataTypes) => {
           as: 'runs',
           foreignKey: 'userId'
         });
+      },
+      hashPassword: (password) => {
+        return bcrypt.genSaltAsync(BCRYPT_COST).then((salt) => {
+          return bcrypt.hashAsync(password, salt);
+        }).then((hash) => {
+          return hash;
+        });
+      },
+      checkPassword: (password, hashedPassword) => {
+        return bcrypt.compareAsync(password, hashedPassword);
       }
     }
   });

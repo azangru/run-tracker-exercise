@@ -21,17 +21,34 @@
 
 ```json
 {
+  "role": 1,
   "id": 1,
-  "firstName": "John",
-  "lastName": "Smith",
-  "username": "jsmith",
-  "token": "somegibberishstring"
-}
-```
+  "username": "some name",
+  "password": "somegibberish",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "updatedAt": "2015-10-15T22:53:49.626Z",
+  "createdAt": "2015-10-15T22:53:49.626Z"
+}```
+
 
 - **Error Response**
+  (the typical case — a user with an already existing username is being created)
   * Code: `400 BAD REQUEST`
-  * Content: `{ "error": "Invalid data parameters." }`
+  * Content:
+  ```json
+  {
+    "error": "Invalid data parameters.",
+    "errors": [
+      {
+        "message": "username must be unique",
+        "type": "unique violation",
+        "path": "username",
+        "value": "some user name"
+      }
+    ]
+  }
+  ```
 
 
 ## List
@@ -183,4 +200,3 @@
 
     * Code: `401 UNAUTHORIZED`
     * Content: `{ "error": "You are unauthorized to make this request." }`
-    

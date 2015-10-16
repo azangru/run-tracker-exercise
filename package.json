@@ -7,11 +7,13 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test mocha --compilers js:babel/register ./tests/**/*.js"
   },
   "author": "Andrey Azov",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "bcrypt": "^0.8.5",
+    "bluebird": "^2.10.2",
     "body-parser": "~1.14.1",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
@@ -46,6 +48,7 @@
     "postcss-nested": "^1.0.0",
     "postcss-normalize": "^0.1.1",
     "sinon": "^1.17.1",
+    "supertest": "^1.1.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0"
   }
