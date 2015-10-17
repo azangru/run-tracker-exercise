@@ -2,6 +2,10 @@ import app from '../../server/app.js';
 import models from '../../server/models';
 import chai from 'chai';
 import request  from 'supertest';
+import Promise from 'bluebird';
+import jwt from 'jsonwebtoken';
+import {prepareUserDataForResponse} from '../../server/utils/usersUtils.js';
+import config from '../../server/config/config.js';
 let expect = chai.expect;
 
 describe('Users Router', () => {
@@ -29,8 +33,6 @@ describe('Users Router', () => {
       .expect(200)
       .end((err, response) => {
         expect(response.body.username).to.equal('jsmith');
-        expect(response.body).to.have.property('password');
-        expect(response.body.password).not.to.equal('secret-password');
         expect(response.body.firstName).to.equal('John');
         expect(response.body.lastName).to.equal('Smith');
         expect(response.body.role).to.equal(1);
@@ -54,6 +56,83 @@ describe('Users Router', () => {
           lastName: 'Smith'
         })
         .expect(400, done);
+      });
+    });
+
+  });
+
+  describe('List users route', () => {
+
+    // will create 3 users with different roles
+    let user1, user2, user3;
+    let token1, token2, token3;
+
+    beforeEach((done) => {
+      let createUser1 = models.User.create({
+        username: 'jsmith',
+        password: 'secret-password',
+        firstName: 'John',
+        lastName: 'Smith',
+        role: 1
+      }).then((newUser) => {
+        user1 = prepareUserDataForResponse(newUser);
+        token1 = jwt.sign({id: newUser.id}, config.jwtKey);
+      });
+
+      let createUser2 = models.User.create({
+        username: 'jbull',
+        password: 'secret-password',
+        firstName: 'John',
+        lastName: 'Bull',
+        role: 2
+      }).then((newUser) => {
+        user2 = prepareUserDataForResponse(newUser);
+        token2 = jwt.sign({id: newUser.id}, config.jwtKey);
+      });
+
+      let createUser3 = models.User.create({
+        username: 'jfrost',
+        password: 'secret-password',
+        firstName: 'John',
+        lastName: 'Frost',
+        role: 3
+      }).then((newUser) => {
+        user3 = prepareUserDataForResponse(newUser);
+        token3 = jwt.sign({id: newUser.id}, config.jwtKey);
+      });
+
+      Promise.all([createUser1, createUser2, createUser3]).then(() => {
+        done();
+      });
+    });
+
+    it('returns an array of users if the request sender has sufficient privileges', (done) => {
+      request(app).get('/api/users')
+      .query({
+        token: token2
+      })
+      .expect(200)
+      .end((err, response) => {
+        expect(response.body.length).to.equal(3);
+        expect(response.body).to.contain(user1);
+        expect(response.body).to.contain(user2);
+        expect(response.body).to.contain(user3);
+        done();
+      });
+    });
+
+    it('returns an error if the request sender does not have sufficient privileges', (done) => {
+      request(app).get('/api/users')
+      .query({
+        token: token1
+      })
+      .expect(401)
+      .end((err, response) => {
+        expect(response.body).to.eql({
+          success: false,
+          message: 'Not enough privileges to access the data.'
+        });
+        done();
       });
     });
 

@@ -2,12 +2,10 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
 import models from '../models';
+import authenticate from '../middleware/authentication.js';
+import {getIdFromToken, isUserA, prepareUserDataForResponse} from '../utils/usersUtils.js';
 
 let router = express.Router();
-
-router.get('/', (req, res) => {
-  res.json({message: 'i am users router'});
-});
 
 router.post('/', (req, res) => {
   if (!req.body.username || !req.body.password) {
@@ -21,7 +19,7 @@ router.post('/', (req, res) => {
       lastName: req.body.lastName
     });
   }).then((newUser) => {
-    newUser = newUser.dataValues;
+    newUser = prepareUserDataForResponse(newUser);
     newUser.token = jwt.sign({id: newUser.id}, config.jwtKey);
     res.json(newUser);
   }).catch((err) => {
@@ -31,5 +29,23 @@ router.post('/', (req, res) => {
   });
 });
 
+// will use authentication on other user routes
+router.use(authenticate);
+
+router.get('/', (req, res) => {
+  let userId = getIdFromToken(req);
+  models.User.findById(userId).then((user) => {
+    if (isUserA(['manager', 'admin'], user)) {
+      return models.User.findAll().then((users) => {
+        res.json(prepareUserDataForResponse(users));
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        message: 'Not enough privileges to access the data.'
+      });
+    }
+  });
+});
 
 export default router;
