@@ -94,7 +94,7 @@
     * Code: `401 UNAUTHORIZED`
     * Content: `{ "error": "You are unauthorized to make this request." }`
 
-## Find
+## Find / Show
 
   - **URL**
     + `/users/:id`

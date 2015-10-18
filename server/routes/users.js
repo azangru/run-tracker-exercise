@@ -2,6 +2,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
 import models from '../models';
+import runs from './runs.js';
 import authenticate from '../middleware/authentication.js';
 import userUtils from '../utils/usersUtils.js';
 let getIdFromToken = userUtils.getIdFromToken;
@@ -132,5 +133,8 @@ router.delete('/:id', (req, res) => {
     });
   });
 });
+
+// ROUTES FOR RUNS (will be accessed through a user)
+router.use('/:id/runs', runs);
 
 export default router;
