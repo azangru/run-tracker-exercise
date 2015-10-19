@@ -1,6 +1,14 @@
-import { createStore } from 'redux';
-import reducers from './reducers';
+import { createStore, compose } from 'redux';
+import { reduxReactRouter } from 'redux-router';
+import createHistory from 'history/lib/createBrowserHistory';
+import reducers from '../reducers';
+import routes from '../routes.jsx';
 
-let store = createStore(reducers);
+
+let finalCreateStore = compose(
+  reduxReactRouter({ routes, createHistory })
+)(createStore);
+
+let store = finalCreateStore(reducers);
 
 export default store;

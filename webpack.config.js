@@ -14,7 +14,8 @@ export default {
       {
         test: [/\.jsx?$/],
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel'
+        loader: 'babel',
+        query: {stage: 0}
       }
       // // required to write 'require('./style.css')'
       // { test: /\.css$/,    loader: 'style-loader!css-loader' },

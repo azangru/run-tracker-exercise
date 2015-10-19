@@ -23,7 +23,7 @@ let userReducer = (state=initialState, action) => {
     return {
       ...state,
       error: action.error
-    }
+    };
   default:
     return initialState;
   }
