@@ -43,3 +43,8 @@ References:
 - Authentication in Node + Express with JSON tokens: https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
 - Express project structure: https://www.terlici.com/2014/08/25/best-practices-express-structure.html
 - Using ES6 with Node: https://www.airpair.com/javascript/posts/using-es6-harmony-with-nodejs
+- Redux official docs: http://rackt.org/redux/docs
+- A Redux tutorial: https://github.com/happypoulp/redux-tutorial
+- Redux discussion — where to put API calls: https://github.com/rackt/redux/issues/291
+- Another Redux discussion on async API calls: https://github.com/rackt/redux/issues/99
+- An example of full-stack Redux-based app with web sockets: http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html
