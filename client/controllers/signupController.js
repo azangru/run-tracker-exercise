@@ -5,7 +5,7 @@ let signupController = ($scope, $state, authentication) => {
   $scope.lastName = '';
 
   $scope.signup = () => {
-    console.log('signing up');
+    authentication.signup($scope.username, $scope.password, $scope.firstName, $scope.lastName);
   };
 
 };

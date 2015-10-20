@@ -1,0 +1,34 @@
+<p>Here is your jogging history</p>
+
+<div ng-if="isAddingNew">
+  <label> Date:
+    <input type="date" ng-model="newRun.date">
+  </label>
+  <label> Distance (meters):
+    <input type="number" placeholder="meters" ng-model="newRun.distance">
+  </label>
+  <label> Time (minutes):
+    <input type="number" placeholder="minutes" ng-model="newRun.time">
+  </label>
+  <button ng-click="submitNewRun()">Add</button>
+</div>
+
+<button ng-if="!isAddingNew" ng-click="openAddNewForm()">Add new record</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Distance (meters)</th>
+      <th>Time (minutes)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="run in runs">
+      <td>{{run.date | date : 'MMMM d'}}</td>
+      <td>{{run.distance}}</td>
+      <td>{{run.time}}</td>
+      <td><button>Edit</button></td>
+    </tr>
+  </tbody>
+</table>

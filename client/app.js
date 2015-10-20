@@ -2,6 +2,7 @@ import angular from 'angular';
 import router from 'angular-ui-router';
 import ngstorage from 'ngstorage';
 import homeController from './controllers/homeController';
+import runsController from './controllers/runsController';
 import loginController from './controllers/loginController';
 import signupController from './controllers/signupController';
 import authenticationService from './services/authenticationService';
@@ -27,6 +28,11 @@ let runTracker = angular.module('runTracker', [
       url: '/signup',
       templateUrl: 'templates/signup.html',
       controller: signupController
+    })
+    .state('runs', {
+      url: '/users/:userId/runs',
+      templateUrl: 'templates/runs.html',
+      controller: runsController
     });
 })
 .factory('authentication', ['$localStorage', '$http', authenticationService]);
