@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-let authenticationService = ($localStorage, $http) => {
+let authenticationService = ($localStorage, $rootScope, $state, $http) => {
   return {
     getToken() {
       return $localStorage.token;
@@ -21,7 +21,10 @@ let authenticationService = ($localStorage, $http) => {
         console.log('received data from login!', jwt.decode(data.data.token));
         let userData = jwt.decode(data.data.token);
         userData.token = data.data.token;
+        $rootScope.isLoggedIn = true;
+        $rootScope.userData = jwt.decode(data.data.token);
         this.storeUserData(userData);
+        $state.go('root.home');
       }, (data) => {
         console.log('received error from login!', data);
         return data;
@@ -33,6 +36,8 @@ let authenticationService = ($localStorage, $http) => {
       ).then((data) => {
         console.log('received data from signup!', data);
         this.storeUserData(data.data);
+        $rootScope.isLoggedIn = true;
+        $rootScope.userData = data;
       }, (data) => {
         console.log('received error from signup!', data);
         return data;
@@ -45,9 +50,13 @@ let authenticationService = ($localStorage, $http) => {
         lastName: data.lastName,
         role: data.role
       };
-      console.log('user', user);
       $localStorage.user = user;
       $localStorage.token = data.token;
+    },
+    logout() {
+      $localStorage.$reset();
+      $rootScope.isLoggedIn = false;
+      $rootScope.userData = undefined;
     }
   };
 

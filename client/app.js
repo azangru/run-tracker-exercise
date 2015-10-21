@@ -5,6 +5,7 @@ import homeController from './controllers/homeController';
 import runsController from './controllers/runsController';
 import loginController from './controllers/loginController';
 import signupController from './controllers/signupController';
+import headerController from './controllers/headerController';
 import authenticationService from './services/authenticationService';
 
 let runTracker = angular.module('runTracker', [
@@ -14,27 +15,57 @@ let runTracker = angular.module('runTracker', [
 .config(($locationProvider, $stateProvider) => {
   $locationProvider.html5Mode(true);
   $stateProvider
-    .state('home', {
+    .state('root', {
+      url: '',
+      abstract: true,
+      views: {
+        'header': {
+          templateUrl: 'templates/header.html',
+          controller: headerController
+        }
+      },
+      onEnter: function(authentication, $rootScope) {
+        $rootScope.isLoggedIn = authentication.getToken() ? true : false;
+      }
+    })
+    .state('root.home', {
+      parent: 'root',
       url: '/',
-      templateUrl: 'templates/home.html',
-      controller: homeController
+      views: {
+        '@': {
+          templateUrl: 'templates/home.html',
+          controller: homeController
+        }
+      }
     })
-    .state('login', {
+    .state('root.login', {
       url: '/login',
-      templateUrl: 'templates/login.html',
-      controller: loginController
+      views: {
+        '@': {
+          templateUrl: 'templates/login.html',
+          controller: loginController
+        }
+      }
     })
-    .state('signup', {
+    .state('root.signup', {
       url: '/signup',
-      templateUrl: 'templates/signup.html',
-      controller: signupController
+      views: {
+        '@': {
+          templateUrl: 'templates/signup.html',
+          controller: signupController
+        }
+      }
     })
-    .state('runs', {
+    .state('root.runs', {
       url: '/users/:userId/runs',
-      templateUrl: 'templates/runs.html',
-      controller: runsController
+      views: {
+        '@': {
+          templateUrl: 'templates/runs.html',
+          controller: runsController
+        }
+      }
     });
 })
-.factory('authentication', ['$localStorage', '$http', authenticationService]);
+.factory('authentication', ['$localStorage', '$rootScope', '$state', '$http', authenticationService]);
 
 export default runTracker;

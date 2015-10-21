@@ -71,7 +71,7 @@ let runsController = ($scope, $state, $stateParams, $http, authentication) => {
   }
 
   $scope.toLoginPage = () => {
-    $state.go('login');
+    $state.go('root.login');
   };
 
 };

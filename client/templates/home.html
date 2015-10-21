@@ -3,7 +3,8 @@
 <button ng-if="!hasToken" ng-click="toLoginPage()">Login</button>
 <button ng-if="!hasToken" ng-click="toSignupPage()">Sign Up</button>
 
+data{{userData}}
 
-<button ng-if="hasToken && userData && userData.role === 1" ng-click="toLoginPage()">View your records</button>
+<button ng-if="hasToken && userData && userData.role === 1" ng-click="toRunsPage()">View your records</button>
 <button ng-if="hasToken && userData && userData.role === 2" ng-click="toLoginPage()">Manage users</button>
 <button ng-if="hasToken && userData && userData.role === 3" ng-click="toLoginPage()">Manage data</button>

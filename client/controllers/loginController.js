@@ -1,4 +1,4 @@
-let loginController = ($scope, $state, authentication) => {
+let loginController = ($scope, $rootScope, $state, authentication) => {
   $scope.username = '';
   $scope.password = '';
 
@@ -7,7 +7,7 @@ let loginController = ($scope, $state, authentication) => {
   };
 
   $scope.toSignupPage = () => {
-    $state.go('signup');
+    $state.go('root.signup');
   };
 
 };

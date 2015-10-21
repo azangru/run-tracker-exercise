@@ -1,22 +1,29 @@
-let homeController = ($scope, $state, authentication) => {
-  $scope.hasToken = authentication.getToken() ? true : false;
-  $scope.userData = authentication.getUserData();
+let homeController = ($scope, $rootScope, $state, authentication) => {
+  $scope.hasToken = $rootScope.isLoggedIn || authentication.getToken() !== undefined;
+  $scope.userData = $rootScope.userData || authentication.getUserData();
+  console.log('$scope.userData', $scope.userData);
 
   $scope.toLoginPage = () => {
-    $state.go('login');
+    $state.go('root.login');
   };
 
   $scope.toSignupPage = () => {
-    $state.go('signup');
+    $state.go('root.signup');
   };
 
   $scope.toRunsPage = () => {
-    $state.go('signup');
+    let user = authentication.getUserData();
+    $state.go('root.runs', {userId: user.id});
   };
 
   $scope.toUsersPage = () => {
-    $state.go('signup');
+    $state.go('root.users');
   };
+
+  $rootScope.$watch('isLoggedIn', () => {
+    $scope.hasToken = $rootScope.isLoggedIn;
+    $scope.userData = $rootScope.userData;
+  });
 
 };
 
