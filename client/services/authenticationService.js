@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 let authenticationService = ($localStorage, $http) => {
   return {
     getToken() {
@@ -16,8 +18,10 @@ let authenticationService = ($localStorage, $http) => {
           password: password
         }
       ).then((data) => {
-        console.log('received data from login!', data);
-        return data;
+        console.log('received data from login!', jwt.decode(data.data.token));
+        let userData = jwt.decode(data.data.token);
+        userData.token = data.data.token;
+        this.storeUserData(userData);
       }, (data) => {
         console.log('received error from login!', data);
         return data;
@@ -41,6 +45,7 @@ let authenticationService = ($localStorage, $http) => {
         lastName: data.lastName,
         role: data.role
       };
+      console.log('user', user);
       $localStorage.user = user;
       $localStorage.token = data.token;
     }

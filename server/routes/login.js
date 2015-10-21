@@ -23,7 +23,12 @@ router.post('/', (req, res) => {
     return models.User.checkPassword(req.body.password, hashedPassword);
   }).then((isValid) => {
     if (isValid) {
-      let token = jwt.sign({id: user.id}, config.jwtKey);
+      let token = jwt.sign({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role
+      }, config.jwtKey);
       return res.status(200).json({token: token});
     } else {
       return res.status(403).json({error: 'Incorrect password'});

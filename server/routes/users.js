@@ -27,7 +27,12 @@ router.post('/', (req, res) => {
     });
   }).then((newUser) => {
     newUser = prepareUserDataForResponse(newUser);
-    newUser.token = jwt.sign({id: newUser.id}, config.jwtKey);
+    newUser.token = jwt.sign({
+      id: newUser.id,
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      role: newUser.role
+    }, config.jwtKey);
     res.json(newUser);
   }).catch((err) => {
     let error = {error: 'Invalid data parameters.'};

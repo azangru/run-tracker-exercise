@@ -25,10 +25,26 @@
   </thead>
   <tbody>
     <tr ng-repeat="run in runs">
-      <td>{{run.date | date : 'MMMM d'}}</td>
-      <td>{{run.distance}}</td>
-      <td>{{run.time}}</td>
-      <td><button>Edit</button></td>
+      <td>
+        <span ng-if="editEntry !== run.id">{{run.date | date : 'MMMM d'}}</span>
+        <span ng-if="editEntry === run.id"><input type="date" ng-model="run.date"></span>
+      </td>
+      <td>
+        <span ng-if="editEntry !== run.id">{{run.distance}}</span>
+        <span ng-if="editEntry === run.id"><input type="number" ng-model="run.distance"></span>
+      </td>
+      <td>
+        <span ng-if="editEntry !== run.id">{{run.time}}</span>
+        <span ng-if="editEntry === run.id"><input type="number" ng-model="run.time"></span>
+      </td>
+      <td>
+        <div ng-if="editEntry !== run.id">
+          <button ng-click="startEditing(run.id)">Edit</button>
+        </div>
+        <div ng-if="editEntry === run.id">
+          <button ng-click="submitUpdatedRun(run.id, run.date, run.distance, run.time)">Update</button><button ng-click="stopEditing()">Cancel</button>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>

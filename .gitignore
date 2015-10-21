@@ -1,4 +1,4 @@
 node_modules
 dist
 server-dist
-server/db
+server/db/*.sqlite
