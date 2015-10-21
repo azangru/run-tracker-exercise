@@ -1,6 +1,8 @@
 let homeController = ($scope, $rootScope, $state, authentication) => {
   $scope.hasToken = $rootScope.isLoggedIn || authentication.getToken() !== undefined;
+  console.log('$scope.userData', $scope.userData);
   $scope.userData = $rootScope.userData || authentication.getUserData();
+  $scope.userRole = authentication.getUserData().role;
   console.log('$scope.userData', $scope.userData);
 
   $scope.toLoginPage = () => {

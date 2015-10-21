@@ -22,7 +22,15 @@ router.get('/', (req, res) => {
       });
     }
     getUser(user, req.params.id).then((user) => {
-      user.getRuns().then((runs) => {
+      let filter = {where: {date: {}}};
+      if (req.query.startDate) {
+        filter.where.date.gte = new Date(req.query.startDate);
+      } else if (req.query.endDate) {
+        filter.where.date.lte = new Date(req.query.endDate);
+      } else {
+        filter.where.date.lte = new Date();
+      }
+      user.getRuns(filter).then((runs) => {
         res.json(runs);
       });
     });

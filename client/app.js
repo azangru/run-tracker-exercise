@@ -3,6 +3,7 @@ import router from 'angular-ui-router';
 import ngstorage from 'ngstorage';
 import homeController from './controllers/homeController';
 import runsController from './controllers/runsController';
+import usersController from './controllers/usersController';
 import loginController from './controllers/loginController';
 import signupController from './controllers/signupController';
 import headerController from './controllers/headerController';
@@ -62,6 +63,15 @@ let runTracker = angular.module('runTracker', [
         '@': {
           templateUrl: 'templates/runs.html',
           controller: runsController
+        }
+      }
+    })
+    .state('root.users', {
+      url: '/users/',
+      views: {
+        '@': {
+          templateUrl: 'templates/users.html',
+          controller: usersController
         }
       }
     });

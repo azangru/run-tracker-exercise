@@ -8,13 +8,19 @@ let runsController = ($scope, $state, $stateParams, $http, authentication) => {
     let token = authentication.getToken();
     let headers = {'x-access-token': token};
     let url = `/api/users/${$stateParams.userId}/runs`;
-    $http.get(url, {headers}).then((data) => {
+    $http({
+      url: url,
+      headers: headers,
+      params: {
+        startDate: $scope.startFilterDate,
+        endDate: $scope.endFilterDate
+      }
+    }).then((data) => {
       $scope.runs = data.data;
       // dates come as strings over json, so transform them back to dates
       $scope.runs.forEach((run) => {
         run.date = new Date(run.date);
       });
-      console.log($scope.runs);
     }, (data) => {
       if (data.status === 401) {
         $scope.toLoginPage();
@@ -68,7 +74,19 @@ let runsController = ($scope, $state, $stateParams, $http, authentication) => {
 
   $scope.changeStringToDate = (string) => {
     return new Date(string);
-  }
+  };
+
+  $scope.calculateAvgSpeed = (run) => {
+    let meters = run.distance;
+    let minutes = run.time;
+    return Math.round((meters / 1000) / (minutes / 60));
+  };
+
+  $scope.removeRunsFilter = () => {
+    $scope.startFilterDate = undefined;
+    $scope.endFilterDate = undefined;
+    $scope.getRuns();
+  };
 
   $scope.toLoginPage = () => {
     $state.go('root.login');

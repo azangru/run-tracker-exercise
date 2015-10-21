@@ -15,12 +15,19 @@
 
 <button ng-if="!isAddingNew" ng-click="openAddNewForm()">Add new record</button>
 
+Show only records between:
+<input type="date" ng-model="startFilterDate">
+<input type="date" ng-model="endFilterDate">
+<button ng-click="getRuns()">Filter</button>
+<button ng-click="removeRunsFilter()">Remove filter</button>
+
 <table>
   <thead>
     <tr>
       <th>Date</th>
       <th>Distance (meters)</th>
       <th>Time (minutes)</th>
+      <th>Avg. speed (km/h)</th>
     </tr>
   </thead>
   <tbody>
@@ -36,6 +43,9 @@
       <td>
         <span ng-if="editEntry !== run.id">{{run.time}}</span>
         <span ng-if="editEntry === run.id"><input type="number" ng-model="run.time"></span>
+      </td>
+      <td>
+        {{calculateAvgSpeed(run)}}
       </td>
       <td>
         <div ng-if="editEntry !== run.id">
