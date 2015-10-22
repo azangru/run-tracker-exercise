@@ -1,8 +1,11 @@
+import R from 'ramda';
+
 let runsController = ($scope, $state, $stateParams, $http, authentication) => {
   $scope.hasToken = authentication.getToken() ? true : false;
   $scope.userData = authentication.getUserData();
   $scope.newRun = {};
   $scope.isAddingNew = false;
+  $scope.isShowingFilter = false;
 
   $scope.getRuns = () => {
     let token = authentication.getToken();
@@ -46,6 +49,17 @@ let runsController = ($scope, $state, $stateParams, $http, authentication) => {
     });
   };
 
+  $scope.deleteRun = (runId) => {
+    let token = authentication.getToken();
+    let headers = {'x-access-token': token};
+    let url = `/api/users/${$stateParams.userId}/runs/${runId}`;
+    $http.delete(url, {headers}).then(() => {
+      let runIndex = R.findIndex(R.propEq('id', runId), $scope.runs);
+      $scope.runs.splice(runIndex, 1);
+      $scope.stopEditing();
+    });
+  };
+
   $scope.submitUpdatedRun = (id, date, distance, time) => {
     let token = authentication.getToken();
     let headers = {'x-access-token': token};
@@ -82,10 +96,15 @@ let runsController = ($scope, $state, $stateParams, $http, authentication) => {
     return Math.round((meters / 1000) / (minutes / 60));
   };
 
+  $scope.toggleFilterVisibility = () => {
+    $scope.isShowingFilter = !$scope.isShowingFilter;
+  };
+
   $scope.removeRunsFilter = () => {
     $scope.startFilterDate = undefined;
     $scope.endFilterDate = undefined;
     $scope.getRuns();
+    $scope.toggleFilterVisibility();
   };
 
   $scope.toLoginPage = () => {

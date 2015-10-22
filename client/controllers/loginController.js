@@ -3,7 +3,9 @@ let loginController = ($scope, $rootScope, $state, authentication) => {
   $scope.password = '';
 
   $scope.login = () => {
-    authentication.authenticate($scope.username, $scope.password);
+    authentication.authenticate($scope.username, $scope.password).then(() => {
+      $state.go('root.home');
+    });
   };
 
   $scope.toSignupPage = () => {

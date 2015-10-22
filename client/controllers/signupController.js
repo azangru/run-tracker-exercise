@@ -5,7 +5,14 @@ let signupController = ($scope, $state, authentication) => {
   $scope.lastName = '';
 
   $scope.signup = () => {
-    authentication.signup($scope.username, $scope.password, $scope.firstName, $scope.lastName);
+    authentication.signup(
+      $scope.username,
+      $scope.password,
+      $scope.firstName,
+      $scope.lastName
+    ).then(() => {
+      $state.go('root.home');
+    });
   };
 
 };

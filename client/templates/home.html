@@ -1,9 +1,9 @@
 <h1>Run Tracker — an app to track your jogging time</h1>
 
-<button ng-if="!hasToken" ng-click="toLoginPage()">Login</button>
-<button ng-if="!hasToken" ng-click="toSignupPage()">Sign Up</button>
+<button ng-if="!hasToken" class="btn btn-primary" ng-click="toLoginPage()">Login</button>
+<button ng-if="!hasToken" class="btn btn-primary" ng-click="toSignupPage()">Sign Up</button>
 
 
-<button ng-if="hasToken && userRole === 1" ng-click="toRunsPage()">View your records</button>
-<button ng-if="hasToken && userRole === 2" ng-click="toUsersPage()">Manage users</button>
-<button ng-if="hasToken && userRole === 3" ng-click="toUsersPage()">Manage data</button>
+<button class="btn btn-primary" ng-if="hasToken && userData && userData.role === 1" ng-click="toRunsPage()">View your records</button>
+<button class="btn btn-primary" ng-if="hasToken && userData && userData.role === 2" ng-click="toUsersPage()">Manage users</button>
+<button class="btn btn-primary" ng-if="hasToken && userData && userData.role === 3" ng-click="toUsersPage()">Manage data</button>

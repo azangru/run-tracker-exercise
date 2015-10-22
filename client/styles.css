@@ -1,0 +1,50 @@
+html, body {
+  min-height: 100%;
+}
+
+header {
+  text-align: right;
+}
+.header-logout-button {
+  margin: 1em 1em 0 0;
+}
+
+.login-box {
+  width: 300px;
+  margin: 20% auto auto auto;
+  h2 {
+    font-size: 1.5em;
+  }
+  div {
+    margin: 0.5em 0;
+  }
+}
+
+.signup-box {
+  width: 300px;
+  margin: 15% auto auto auto;
+  h2 {
+    font-size: 1.5em;
+  }
+  div {
+    margin: 0.5em 0;
+  }
+}
+
+.add-new-run {
+  margin: 1em 0;
+}
+
+.run-form-controls {
+  text-align: right;
+}
+
+.filter-runs-container {
+  text-align: right;
+}
+
+.filter-runs {
+  display: inline-block;
+  text-align: left;
+  margin: 1em 0;
+}

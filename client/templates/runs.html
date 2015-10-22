@@ -1,27 +1,36 @@
-<p>Here is your jogging history</p>
+<h2>Here is your jogging history</h2>
 
-<div ng-if="isAddingNew">
-  <label> Date:
-    <input type="date" ng-model="newRun.date">
-  </label>
-  <label> Distance (meters):
-    <input type="number" placeholder="meters" ng-model="newRun.distance">
-  </label>
-  <label> Time (minutes):
-    <input type="number" placeholder="minutes" ng-model="newRun.time">
-  </label>
-  <button ng-click="submitNewRun()">Add</button>
+<div class="run-form-controls">
+    <button class="btn btn-primary" ng-if="!isAddingNew" ng-click="openAddNewForm()">Add new record</button>
+    <button class="btn btn-primary" ng-if="!isShowingFilter" ng-click="toggleFilterVisibility()">Filter by date</button>
 </div>
 
-<button ng-if="!isAddingNew" ng-click="openAddNewForm()">Add new record</button>
+<div class="add-new-run">
+    <div ng-if="isAddingNew">
+    <label> Date:
+      <input type="date" class="form-control" ng-model="newRun.date">
+    </label>
+    <label> Distance (meters):
+      <input type="number" class="form-control" placeholder="meters" ng-model="newRun.distance">
+    </label>
+    <label> Time (minutes):
+      <input type="number" class="form-control" placeholder="minutes" ng-model="newRun.time">
+    </label>
+    <button class="btn btn-primary" ng-click="submitNewRun()">Add</button>
+  </div>
+</div>
 
-Show only records between:
-<input type="date" ng-model="startFilterDate">
-<input type="date" ng-model="endFilterDate">
-<button ng-click="getRuns()">Filter</button>
-<button ng-click="removeRunsFilter()">Remove filter</button>
+<div class="filter-runs-container" ng-if="isShowingFilter">
+  <div class="filter-runs">
+    <p>Show only records between:</p>
+    <input type="date" ng-model="startFilterDate">
+    <input type="date" ng-model="endFilterDate">
+    <button class="btn btn-primary" ng-click="getRuns()">Filter</button>
+    <button class="btn btn-primary" ng-click="removeRunsFilter()">Remove filter</button>
+  </div>
+</div>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Date</th>
@@ -49,10 +58,12 @@ Show only records between:
       </td>
       <td>
         <div ng-if="editEntry !== run.id">
-          <button ng-click="startEditing(run.id)">Edit</button>
+          <button class="btn btn-primary" ng-click="startEditing(run.id)">Edit</button>
         </div>
         <div ng-if="editEntry === run.id">
-          <button ng-click="submitUpdatedRun(run.id, run.date, run.distance, run.time)">Update</button><button ng-click="stopEditing()">Cancel</button>
+          <button class="btn btn-primary" ng-click="submitUpdatedRun(run.id, run.date, run.distance, run.time)">Update</button>
+          <button class="btn btn-danger" ng-click="deleteRun(run.id)">Delete</button>
+          <button class="btn btn-default" ng-click="stopEditing()">Cancel</button>
         </div>
       </td>
     </tr>

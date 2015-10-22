@@ -1,9 +1,8 @@
 let homeController = ($scope, $rootScope, $state, authentication) => {
   $scope.hasToken = $rootScope.isLoggedIn || authentication.getToken() !== undefined;
-  console.log('$scope.userData', $scope.userData);
-  $scope.userData = $rootScope.userData || authentication.getUserData();
-  $scope.userRole = authentication.getUserData().role;
-  console.log('$scope.userData', $scope.userData);
+  // i really have no idea why the line below doesn't work and the hack with the rootscope does. Makes no sense
+  // $scope.userData = $rootScope.userData || authentication.getUserData();
+  $rootScope.userData = $rootScope.userData || authentication.getUserData();
 
   $scope.toLoginPage = () => {
     $state.go('root.login');
