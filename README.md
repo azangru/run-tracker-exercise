@@ -22,5 +22,8 @@ The project contains unit tests using mocha, chai, and supertest.
 ## Running
 - npm start
 
+## Seed the initial data (three users with different roles)
+- npm seed
+
 ## Testing
 - npm test
