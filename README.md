@@ -12,3 +12,15 @@ The exercise provides examples of:
 - tests of the backend API (mostly integration tests with Supertest; written using Mocha and Chai)
 
 The project contains unit tests using mocha, chai, and supertest.
+
+# Scripts
+
+## Installation (building)
+- npm install
+- gulp build-prod
+
+## Running
+- npm start
+
+## Testing
+- npm test
