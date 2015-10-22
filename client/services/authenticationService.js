@@ -37,7 +37,8 @@ let authenticationService = ($localStorage, $rootScope, $state, $http) => {
         console.log('received data from signup!', data);
         this.storeUserData(data.data);
         $rootScope.isLoggedIn = true;
-        $rootScope.userData = data;
+        $rootScope.userData = data.data;
+        $state.go('root.home');
       }, (data) => {
         console.log('received error from signup!', data);
         return data;

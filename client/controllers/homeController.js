@@ -4,6 +4,7 @@ let homeController = ($scope, $rootScope, $state, authentication) => {
   // $scope.userData = $rootScope.userData || authentication.getUserData();
   $rootScope.userData = $rootScope.userData || authentication.getUserData();
 
+
   $scope.toLoginPage = () => {
     $state.go('root.login');
   };

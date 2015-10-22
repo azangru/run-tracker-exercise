@@ -10,9 +10,7 @@ let signupController = ($scope, $state, authentication) => {
       $scope.password,
       $scope.firstName,
       $scope.lastName
-    ).then(() => {
-      $state.go('root.home');
-    });
+    );
   };
 
 };
